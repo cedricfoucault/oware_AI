@@ -14,7 +14,7 @@ public class Minimax implements AlgoJeu {
 
     /** La profondeur de recherche par défaut
      */
-    private final static int PROFMAXDEFAUT = 2;
+    private final static int PROFMAXDEFAUT = 4;
 
     /**  La profondeur de recherche utilisée pour l'algorithme
      */

@@ -11,7 +11,7 @@ public class PlateauDominos implements PlateauJeu {
 
     /* *********** constantes *********** */
     /** Taille de la grille */
-    public final static int TAILLE = 4;
+    public final static int TAILLE = 7;
 
     /* *********** Paramètres de classe *********** */
     private final static int VIDE = 0;
