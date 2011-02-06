@@ -31,8 +31,8 @@ public class PartieAwale {
 
 
         AlgoJeu AlgoJoueur[] = new AlgoJeu[2];
-        AlgoJoueur[0] = new Minimax(HeuristiquesAwalé.h1, j1, j2, 1); // Il faut remplir la méthode !!!
-        AlgoJoueur[1] = new Alphabeta(HeuristiquesAwalé.h2, j2, j1, 2); // Il faut remplir la méthode !!!
+        AlgoJoueur[0] = new Minimax(HeuristiquesAwale.h1, j1, j2, 1); // Il faut remplir la méthode !!!
+        AlgoJoueur[1] = new Alphabeta(HeuristiquesAwale.h2, j2, j1, 2); // Il faut remplir la méthode !!!
         // AlgoJoueur[1] = new Humain();
 
         System.out.println("TD IIA n.4 - Algorithmes pour les Jeux");
@@ -45,8 +45,8 @@ public class PartieAwale {
         int[] nbCoups = {0,0}; // Contient le nombre de coups joués par chaque joueur
         int nbnoeudsCoup = 0; // Nombre de noeuds développés à chaque coup
 
-        PlateauJeu plateauCourant = new PlateauAwalé();
-        PlateauAwalé.setJoueurs(j1, j2);
+        PlateauJeu plateauCourant = new PlateauAwale();
+        PlateauAwale.setJoueurs(j1, j2);
         // Pour savoir qui joue "noir" et qui joue "blanc"
 
 
@@ -74,7 +74,7 @@ public class PartieAwale {
                 System.out.println("Coup joué : " + meilleurCoup + " par le joueur " + lesJoueurs[jnum]);
 
                 plateauCourant.joue(lesJoueurs[jnum], meilleurCoup);
-                System.out.println("Le joueur " + (jnum+1) + " a capturé " + ((PlateauAwalé)plateauCourant).getCapture(lesJoueurs[jnum]) + " graines");
+                System.out.println("Le joueur " + (jnum+1) + " a capturé " + ((PlateauAwale)plateauCourant).getCapture(lesJoueurs[jnum]) + " graines");
                 nbCoups[jnum]++;
                 // Le coup est effectivement joué
                 jnum = 1 - jnum;
