@@ -39,6 +39,83 @@ public class PlateauAwalé implements PlateauJeu {
     /** Le nombre de graines restantes en jeu */
     private int reste;
 
+    /* *********** Classe interne *********** */
+    /** Un trou (case) du jeu */
+    private class Trou {
+
+        private Trou voisinGauche;
+        private Trou voisinDroit;
+        private int nbGraines;
+        private Joueur propriétaire;
+
+        public Trou(Joueur j) {
+            this(j, 4); // 4 graines pour chaque trou en début de partie
+        }
+
+        public Trou(Joueur j, int graines) {
+            propriétaire = j;
+            nbGraines = graines;
+        }
+
+        public void setVoisins(Trou voisinGauche, Trou voisinDroit) {
+            setVoisinGauche(voisinGauche);
+            setVoisinDroit(voisinDroit);
+        }
+
+        public void setVoisinGauche(Trou voisin) {
+            voisinGauche = voisin;
+        }
+
+        public Trou getVoisinGauche() {
+            return voisinGauche;
+        }
+
+        public void setVoisinDroit(Trou voisin) {
+            voisinDroit = voisin;
+        }
+
+        public Trou getVoisinDroit() {
+            return voisinDroit;
+        }
+
+        /** Déclencher un coup :
+         *  Appeler cette méthode sur le trou joué pour ramasser, égrainer et
+         *  capturer les graines.
+         */
+        public void declencherCoup(Joueur joueurActuel) {
+            // Vérifier que joueurActuel == propriétaire, sinon coup non valide.
+            if (!joueurActuel.equals(propriétaire)) {
+                throw new IllegalArgumentException("Le joueur n'est pas"
+                        + "propriétaire de la case à jouer");
+            }
+            // ...
+            // Vérifier que nbGraines > 0, sinon coup non valide.
+            // ...
+            getVoisinDroit().égrainer(nbGraines, joueurActuel);
+            nbGraines = 0;
+        }
+
+        protected void égrainer(int graines, Joueur joueurActuel) {
+            switch (graines) {
+                case 0:
+                    throw new IllegalArgumentException("Aucune graine à distribuer");
+                case 1:
+                    nbGraines++;
+                    capturer(joueurActuel); break;
+                default:
+                    nbGraines++;
+                    getVoisinDroit().égrainer(graines - 1, joueurActuel);
+            }
+        }
+
+        private void capturer(Joueur joueurActuel) {
+            // si joueurActuel != proprietaire... ET nbGraines vaut 2 ou 3
+            //     joueurActuel.addToScore(nbGraines);
+            //     nbGraines = 0;
+            //     getVoisinGauche().capturer(joueurActuel);
+        }
+    }
+
     /************* Constructeurs ****************/
     public PlateauAwalé() {
         reste = 48;
@@ -46,8 +123,9 @@ public class PlateauAwalé implements PlateauJeu {
         capture = new int[2];
         for (int i = 0; i < 2; i++) {
             capture[i] = 0;
-            for (int j = 0; j < 6; j++)
+            for (int j = 0; j < 6; j++) {
                 trous[i][j] = 4;
+            }
         }
     }
 
@@ -87,9 +165,12 @@ public class PlateauAwalé implements PlateauJeu {
 
     public Joueur getJoueurAdverse(Joueur j) {
         if (this.isJoueur1(j)) // joueur2 : joueur adverse
+        {
             return joueur2;
-        else  // joueur1 : joueur adverse
+        } else // joueur1 : joueur adverse
+        {
             return joueur1;
+        }
     }
 
     /************* Méthodes de l'interface PlateauJeu ****************/
@@ -175,14 +256,16 @@ public class PlateauAwalé implements PlateauJeu {
         if (estAffamé(joueurAdverse)) { // l'adversaire n'a plus de graine
             if (trous[rangée][trou] != 0) {
                 return (estNourrissant(joueur, ca)); // le coup doit nourrir l'adversaire
-            } else
+            } else {
                 return false;
+            }
         } else // l'adversaire a au moins une graine
+        {
             return (trous[rangée][trou] != 0);
+        }
     }
-    
-    /* ********************* Autres méthodes ***************** */
 
+    /* ********************* Autres méthodes ***************** */
     public int avantageJ1() {
         if (finDePartie()) {
             if (capture[0] > capture[1]) {
@@ -219,18 +302,21 @@ public class PlateauAwalé implements PlateauJeu {
     }
 
     /** Associe à un joueur une rangée du tableau trous */
-    private int joueurToInt(Joueur j){
-        if (isJoueur1(j))
+    private int joueurToInt(Joueur j) {
+        if (isJoueur1(j)) {
             return 0;
-        else // Joueur 2
+        } else // Joueur 2
+        {
             return 1;
+        }
     }
 
     /* Détermine si un joueur n'a plus de graine */
     private boolean estAffamé(Joueur j) {
         for (int nbGraines : trous[joueurToInt(j)]) {
-            if (nbGraines != 0)
+            if (nbGraines != 0) {
                 return false;
+            }
         }
         return true;
     }
@@ -270,7 +356,7 @@ public class PlateauAwalé implements PlateauJeu {
         int rangéeActuelle = rangée, trouActuel = trou;
 
         trous[rangée][trou] = 0; // On prend toutes les graines du coup joué
-        for (int i=1; i <= nbGraines; i++) {  // On égraine
+        for (int i = 1; i <= nbGraines; i++) {  // On égraine
             int indice = trou + i;
             if (i % 12 == 0) {  // A VERIFIER !!!
                 nbGraines++;
@@ -279,8 +365,7 @@ public class PlateauAwalé implements PlateauJeu {
             int quotient = indice / 6;
             if (rangée == 0) {
                 rangéeActuelle = rangée + quotient % 2;
-            }
-            else {
+            } else {
                 rangéeActuelle = rangée - quotient % 2;
             }
             trouActuel = indice - quotient * 6; // Trou sur lequel on pose une graine
@@ -298,8 +383,4 @@ public class PlateauAwalé implements PlateauJeu {
             }
         }
     }
-
 }
-
-
-

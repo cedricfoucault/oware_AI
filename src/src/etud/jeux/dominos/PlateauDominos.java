@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 public class PlateauDominos implements PlateauJeu {
 
+
     /* *********** constantes *********** */
     /** Taille de la grille */
-    public final static int TAILLE = 7;
+    public final static int TAILLE = 4;
 
     /* *********** Paramètres de classe *********** */
     private final static int VIDE = 0;
@@ -25,6 +26,8 @@ public class PlateauDominos implements PlateauJeu {
     /* *********** Attributs  *********** */
     /** le damier */
     private int damier[][];
+    /** Garder en memoire le joueur qui vient de jouer */
+    private Joueur vientDeJouer;
 
     /************* Constructeurs ****************/
     public PlateauDominos() {
@@ -102,6 +105,7 @@ public class PlateauDominos implements PlateauJeu {
     }
 
     public void joue(Joueur joueur, CoupJeu c) {
+        vientDeJouer = joueur;
         CoupDominos cd = (CoupDominos) c;
         int ligne = cd.getLigne();
         int colonne = cd.getColonne();
@@ -115,6 +119,10 @@ public class PlateauDominos implements PlateauJeu {
     }
 
     /* ********************* Autres méthodes ***************** */
+    public Joueur getVientDeJouer() {
+        return vientDeJouer;
+    }
+
     private boolean coupValide(Joueur joueur, int l, int c) {
         if (joueur.equals(joueurBlanc)) {
             return (damier[l][c] == VIDE && damier[l][c + 1] == VIDE);
@@ -159,6 +167,15 @@ public class PlateauDominos implements PlateauJeu {
                 }
             }
         }
+
+        if (nbCoupsBlanc == 0 && nbCoupsNoir == 0) {
+            if (vientDeJouer == joueurBlanc) {
+                return Integer.MAX_VALUE;
+            } else {
+                return -Integer.MAX_VALUE;
+            }
+        }
+
         if (nbCoupsBlanc == 0) {
             return -java.lang.Integer.MAX_VALUE; // perdu
         } else if (nbCoupsNoir == 0) {

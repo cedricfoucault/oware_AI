@@ -12,7 +12,7 @@ public class HeuristiquesDominos {
 			int h = pdom.avantageBlanc();
 			if (pdom.isJoueurBlanc(j))
 				return h;
-			else
+			else // joueur noir
 				return -h;
 		}
 	};
@@ -21,10 +21,10 @@ public class HeuristiquesDominos {
 		public int eval(PlateauJeu p, Joueur j) {
 			PlateauDominos pdom = (PlateauDominos) p;
 			int h = pdom.avantageBlanc();
-			if (pdom.isJoueurNoir(j))
-				return - h;
-			else
+			if (pdom.isJoueurBlanc(j))
 				return h;
+			else
+				return -h;
 		}
 	};
 
