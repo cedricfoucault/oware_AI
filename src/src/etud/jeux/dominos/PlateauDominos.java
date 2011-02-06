@@ -24,9 +24,9 @@ public class PlateauDominos implements PlateauJeu {
     private static Joueur joueurNoir;
 
     /* *********** Attributs  *********** */
-    /** le damier */
+    /** Le damier */
     private int damier[][];
-    /** Garder en memoire le joueur qui vient de jouer */
+    /** Garde en memoire le joueur qui vient de jouer */
     private Joueur vientDeJouer;
 
     /************* Constructeurs ****************/
