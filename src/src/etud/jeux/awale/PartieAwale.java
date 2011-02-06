@@ -45,11 +45,9 @@ public class PartieAwale {
         int[] nbCoups = {0,0}; // Contient le nombre de coups joués par chaque joueur
         int nbnoeudsCoup = 0; // Nombre de noeuds développés à chaque coup
 
-        PlateauJeu plateauCourant = new PlateauAwale();
-        PlateauAwale.setJoueurs(j1, j2);
-        // Pour savoir qui joue "noir" et qui joue "blanc"
-
-
+        PlateauAwale.setJoueurs(j1, j2); // Pour savoir qui joue "1" et qui joue "2"
+        PlateauJeu plateauCourant = new PlateauAwale(lesJoueurs[0]); // On commence par le Joueur Blanc (arbitraire)
+        
         // A chaque itération de la boucle, on fait jouer un des deux joueurs
         // tour a tour
         jnum = 0; // On commence par le joueur Blanc (arbitraire)
