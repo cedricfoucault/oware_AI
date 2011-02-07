@@ -37,15 +37,17 @@ public class PlateauDominos implements PlateauJeu {
                 damier[i][j] = VIDE;
             }
         }
+        vientDeJouer = joueurNoir;
     }
 
-    public PlateauDominos(int depuis[][]) {
+    public PlateauDominos(int depuis[][], Joueur vientDeJouer) {
         damier = new int[TAILLE][TAILLE];
         for (int i = 0; i < TAILLE; i++) {
             for (int j = 0; j < TAILLE; j++) {
                 damier[i][j] = depuis[i][j];
             }
         }
+        this.vientDeJouer = vientDeJouer;
     }
 
     /************* Gestion des paramètres de classe ******************/
@@ -64,7 +66,7 @@ public class PlateauDominos implements PlateauJeu {
 
     /************* Méthodes de l'interface PlateauJeu ****************/
     public PlateauJeu copy() {
-        return new PlateauDominos(this.damier);
+        return new PlateauDominos(this.damier, vientDeJouer);
     }
 
     public boolean coupValide(Joueur joueur, CoupJeu c) {

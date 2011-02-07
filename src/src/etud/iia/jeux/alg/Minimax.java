@@ -19,7 +19,6 @@ public class Minimax implements AlgoJeu {
     private final static int PROFMAXDEFAUT = 4;
     /**  La profondeur de recherche utilisée pour l'algorithme
      */
-//    private static int profMax = PROFMAXDEFAUT;
     private int profMax;
     /**  L'heuristique utilisée par l'algorithme
      */
@@ -37,6 +36,7 @@ public class Minimax implements AlgoJeu {
     /** Le nombre de feuilles évaluées par l'algorithme
      * (facultatif) */
     private int nbfeuilles;
+
     private CoupJeu meilleurCoup;
 
     // -------------------------------------------
